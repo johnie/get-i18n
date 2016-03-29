@@ -10,6 +10,11 @@ npm install get-i18n --save
 ## Syntax
 ```js
 /**
+ * @param {object} i18nSource - An object with languages strings.
+ */
+setI18n(i18nSource);
+
+/**
  * @param {string} keyPath - A keyPath (e.g. 'categories.heading' or 'hello').
  * @param {object} data -  Optional
  * @returns {string}
@@ -18,8 +23,47 @@ getI18n(keyPath, data)
 ```
 
 ## Usage
+
+##### Setup
 ```js
-import getI18n from 'get-i18n';
+import {setI18n} from 'get-i18n';
+
+setI18n({
+    categories: {
+        heading: 'Categories'
+    },
+    products: {
+        heading: 'Other products from {{name}}.'
+    },
+    messages: {
+        heading: {
+            0: 'You have no new message.',
+            1: 'You have one new message.',
+            other: 'You have {{count}} new messages.'
+        }
+    }
+});
+```
+
+##### Hello World
+```
+import {getI18n} from 'get-i18n';
+getI18n('categories.heading') // Categories
+```
+
+##### Interpolation
+```
+import {getI18n} from 'get-i18n';
+getI18n('products.heading', {name: 'Jan'}); // Other products from Jan
+```
+
+##### Pluralization 
+```
+import {getI18n} from 'get-i18n';
+
+getI18n('messages.heading', {count: 0}); // You have no new message.
+getI18n('messages.heading', {count: 1}); // You have one new message.
+getI18n('messages.heading', {count: 7}); // You have 7 new messages.
 ```
 
 ## Tests
