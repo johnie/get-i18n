@@ -1,0 +1,27 @@
+{
+  "name": "get-i18n",
+  "author": "Jan Järfalk",
+  "version": "1.0.0",
+  "description": "Super simple i18n",
+  "main": "dist/getI18n.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register  --inline-diffs",
+    "build": "babel --modules common src/getI18n.js --out-file dist/getI18n.js",
+    "build-watch": "babel --modules common --watch src/getI18n.js --out-file dist/getI18n.js"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janjarfalk/get-i18n.git"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "browserify": "^11.0.1",
+    "mocha": "^2.3.2"
+  },
+  "dependencies": {
+    "lodash.template": "^4.2.2",
+    "lodash.templatesettings": "^4.0.0",
+    "object-path": "^0.9.2"
+  }
+}
