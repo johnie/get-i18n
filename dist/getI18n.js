@@ -3,7 +3,7 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 exports.getI18n = getI18n;
-exports.setLanguage = setLanguage;
+exports.setI18n = setI18n;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -15,16 +15,21 @@ var _lodashTemplate = require('lodash.template');
 
 var _lodashTemplate2 = _interopRequireDefault(_lodashTemplate);
 
+var _objectMap = require('object.map');
+
+var _objectMap2 = _interopRequireDefault(_objectMap);
+
 var _lodashTemplatesettings = require('lodash.templatesettings');
 
 var _lodashTemplatesettings2 = _interopRequireDefault(_lodashTemplatesettings);
 
+// Set lodash template settings to mustache syntax
 _lodashTemplatesettings2['default'].interpolate = /\{\{(.+?)\}\}/g;
 
-var translations = undefined;
+// This variable will stored compiled templates
+var i18n = null;
 
 var getTemplateString = function getTemplateString(key, template, data) {
-    // Pluralisation
     if (typeof template === 'object') {
         if (data.count !== undefined) {
             if (template[data.count]) {
@@ -46,8 +51,10 @@ var getTemplateString = function getTemplateString(key, template, data) {
     }
 };
 
-var insertData = function insertData(key, templateString, data) {
-    var compiled = (0, _lodashTemplate2['default'])(templateString);
+var insertData = function insertData(key, compiled, data) {
+    if (typeof compiled === 'string') {
+        return compiled;
+    }
     try {
         return compiled(data);
     } catch (e) {
@@ -55,7 +62,7 @@ var insertData = function insertData(key, templateString, data) {
     }
 };
 
-var getTemplate = function getTemplate(key) {
+var getTemplate = function getTemplate(translations, key) {
     var template = _objectPath2['default'].get(translations, key);
     if (template === undefined) {
         return 'Missing translation key ' + key;
@@ -65,11 +72,18 @@ var getTemplate = function getTemplate(key) {
 };
 
 function getI18n(key, data) {
-    var template = getTemplate(key);
+    var template = getTemplate(i18n, key);
     var templateString = getTemplateString(key, template, data);
     return insertData(key, templateString, data);
 }
 
-function setLanguage(translationObject) {
-    translations = translationObject;
+function setI18n(i18nSource) {
+    var compileTemplateTree = function compileTemplateTree(tree) {
+        if (typeof tree === 'string') {
+            return (0, _lodashTemplate2['default'])(tree);
+        } else {
+            return (0, _objectMap2['default'])(tree, compileTemplateTree);
+        }
+    };
+    i18n = compileTemplateTree(i18nSource);
 }

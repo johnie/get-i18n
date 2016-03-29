@@ -1,15 +1,16 @@
 "use strict";
 import objectPath from 'object-path';
 import template from 'lodash.template';
+import map from 'object.map';
 import templateSettings from 'lodash.templatesettings';
 
+// Set lodash template settings to mustache syntax
 templateSettings.interpolate = /\{\{(.+?)\}\}/g;
 
-
-let translations;
+// This variable will stored compiled templates
+let i18n = null;
 
 const getTemplateString = (key, template, data) => {
-    // Pluralisation
     if (typeof template === 'object') {
         if (data.count !== undefined) {
             if (template[data.count]) {
@@ -29,10 +30,12 @@ const getTemplateString = (key, template, data) => {
     } else {
         return template;
     }
-}
+};
 
-const insertData = (key, templateString, data) => {
-    var compiled = template(templateString);
+const insertData = (key, compiled, data) => {
+    if (typeof compiled === 'string') {
+        return compiled;
+    }
     try {
         return compiled(data);
     } catch (e) {
@@ -40,7 +43,7 @@ const insertData = (key, templateString, data) => {
     }
 };
 
-const getTemplate = (key) => {
+const getTemplate = (translations, key) => {
     const template = objectPath.get(translations, key);
     if (template === undefined) {
         return `Missing translation key ${key}`;
@@ -49,13 +52,20 @@ const getTemplate = (key) => {
     }
 };
 
+
 export function getI18n(key, data) {
-    const template = getTemplate(key);
+    const template = getTemplate(i18n, key);
     const templateString = getTemplateString(key, template, data);
     return insertData(key, templateString, data);
 }
 
-
-export function setLanguage(translationObject) {
-    translations = translationObject;
+export function setI18n(i18nSource) {
+    const compileTemplateTree = (tree) => {
+        if (typeof tree === 'string') {
+            return template(tree);
+        } else {
+            return map(tree, compileTemplateTree);
+        }
+    };
+    i18n = compileTemplateTree(i18nSource);
 }

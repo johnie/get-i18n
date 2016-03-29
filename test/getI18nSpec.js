@@ -1,7 +1,8 @@
 import assert from 'assert';
-import {getI18n, setLanguage} from '../src/getI18n.js';
+import {setI18n, getI18n} from '../src/getI18n.js';
 
-setLanguage({
+
+setI18n({
     categories: {
         header: 'Categories',
         subheading: {
