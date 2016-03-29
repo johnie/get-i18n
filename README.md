@@ -46,19 +46,19 @@ setI18n({
 ```
 
 ##### Hello World
-```
+```js
 import {getI18n} from 'get-i18n';
 getI18n('categories.heading') // Categories
 ```
 
 ##### Interpolation
-```
+```js
 import {getI18n} from 'get-i18n';
 getI18n('products.heading', {name: 'Jan'}); // Other products from Jan
 ```
 
 ##### Pluralization 
-```
+```js
 import {getI18n} from 'get-i18n';
 
 getI18n('messages.heading', {count: 0}); // You have no new message.
