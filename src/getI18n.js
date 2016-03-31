@@ -10,6 +10,25 @@ templateSettings.interpolate = /\{\{(.+?)\}\}/g;
 // This variable will stored compiled templates
 let i18n = null;
 
+const isPluralizationKey = (obj) => {
+    if(obj.other){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const isNamespace = (obj) => {
+    // console.log(obj);
+    if(typeof obj === 'function' || typeof obj === 'string'){
+        return false;
+    } else if(isPluralizationKey(obj)){
+        return false
+    } else {
+        return true;
+    }
+};
+
 const getTemplateString = (key, template, data) => {
     if (typeof template === 'object') {
         if (data.count !== undefined) {
@@ -55,8 +74,17 @@ const getTemplate = (translations, key) => {
 
 export function getI18n(key, data) {
     const template = getTemplate(i18n, key);
-    const templateString = getTemplateString(key, template, data);
-    return insertData(key, templateString, data);
+    if(isNamespace(template)){
+        return map(template, (t,k) => {
+            const d = data && data[k];
+            console.log(d);
+            const string = getTemplateString(key,t, d);
+            return insertData(key, string, d);
+        });
+    } else {
+        const templateString = getTemplateString(key, template, data);
+        return insertData(key, templateString, data);
+    }
 }
 
 export function setI18n(i18nSource) {

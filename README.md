@@ -30,10 +30,12 @@ import {setI18n} from 'get-i18n';
 
 setI18n({
     categories: {
-        heading: 'Categories'
+        heading: 'Categories',
+        subheading: 'Lorem ipsum...'
     },
     products: {
-        heading: 'Other products from {{name}}.'
+        heading: 'Other products from {{name}}.',
+        subheading: 'Lorem ipsum'
     },
     messages: {
         heading: {
@@ -41,7 +43,8 @@ setI18n({
             1: 'You have one new message.',
             other: 'You have {{count}} new messages.'
         }
-    }
+    },
+    
 });
 ```
 
@@ -66,6 +69,27 @@ getI18n('messages.heading', {count: 1}); // You have one new message.
 getI18n('messages.heading', {count: 7}); // You have 7 new messages.
 ```
 
+##### Get a whole namespace
+```js
+import {getI18n} from 'get-i18n';
+getI18n('categories');
+// {
+//   heading: 'Categories',
+//   subheading: 'Lorem ipsum...'
+// }
+```
+
+##### Get a whole namespace with data
+```js
+import {getI18n} from 'get-i18n';
+getI18n('products', {heading:{name:'Jan'}});
+// {
+//   heading: 'Other products from Jan.',
+     subheading: 'Lorem ipsum'
+// }
+```
+
+
 ## Tests
 ```bash
 npm test
@@ -78,3 +102,4 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 ## Release History
 
 * 1.0.0 Initial release
+* 1.1.0 Namespaces

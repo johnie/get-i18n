@@ -24,7 +24,11 @@ setI18n({
             heading: 'Messages between {{user1}} and {{user2}}.'
         }
     },
-    notifications: '{{count}}'
+    notifications: '{{count}}',
+    calendar: {
+        heading: 'Calendar',
+        description: 'Lorem ipsum...'
+    }
 });
 
 
@@ -70,6 +74,17 @@ describe('Get translation string...', function () {
     it(`get translation with count without pluralisation`, function () {
         const translation = getI18n('notifications', {count: 7});
         assert.equal(translation, '7')
+    });
+});
+
+describe('Get namespace with...', function () {
+    it(`just a keys`, function () {
+        const translations = getI18n('calendar');
+        assert.equal(Object.keys(translations).length, 2);
+    });
+    it(`data`, function () {
+        const translations = getI18n('products', {header: {name: 'Jan'}});
+        assert.equal(translations.header, 'Other products from Jan.');
     });
 });
 
