@@ -29,6 +29,25 @@ _lodashTemplatesettings2['default'].interpolate = /\{\{(.+?)\}\}/g;
 // This variable will stored compiled templates
 var i18n = null;
 
+var isPluralizationKey = function isPluralizationKey(obj) {
+    if (obj.other) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+var isNamespace = function isNamespace(obj) {
+    // console.log(obj);
+    if (typeof obj === 'function' || typeof obj === 'string') {
+        return false;
+    } else if (isPluralizationKey(obj)) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
 var getTemplateString = function getTemplateString(key, template, data) {
     if (typeof template === 'object') {
         if (data.count !== undefined) {
@@ -73,8 +92,17 @@ var getTemplate = function getTemplate(translations, key) {
 
 function getI18n(key, data) {
     var template = getTemplate(i18n, key);
-    var templateString = getTemplateString(key, template, data);
-    return insertData(key, templateString, data);
+    if (isNamespace(template)) {
+        return (0, _objectMap2['default'])(template, function (t, k) {
+            var d = data && data[k];
+            console.log(d);
+            var string = getTemplateString(key, t, d);
+            return insertData(key, string, d);
+        });
+    } else {
+        var templateString = getTemplateString(key, template, data);
+        return insertData(key, templateString, data);
+    }
 }
 
 function setI18n(i18nSource) {

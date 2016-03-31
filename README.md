@@ -103,3 +103,4 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 * 1.0.0 Initial release
 * 1.1.0 Namespaces
+* 1.1.1 Fixed missing build
