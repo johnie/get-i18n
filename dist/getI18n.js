@@ -38,7 +38,6 @@ var isPluralizationKey = function isPluralizationKey(obj) {
 };
 
 var isNamespace = function isNamespace(obj) {
-    // console.log(obj);
     if (typeof obj === 'function' || typeof obj === 'string') {
         return false;
     } else if (isPluralizationKey(obj)) {
@@ -95,7 +94,6 @@ function getI18n(key, data) {
     if (isNamespace(template)) {
         return (0, _objectMap2['default'])(template, function (t, k) {
             var d = data && data[k];
-            console.log(d);
             var string = getTemplateString(key, t, d);
             return insertData(key, string, d);
         });

@@ -19,7 +19,6 @@ const isPluralizationKey = (obj) => {
 }
 
 const isNamespace = (obj) => {
-    // console.log(obj);
     if(typeof obj === 'function' || typeof obj === 'string'){
         return false;
     } else if(isPluralizationKey(obj)){
@@ -77,7 +76,6 @@ export function getI18n(key, data) {
     if(isNamespace(template)){
         return map(template, (t,k) => {
             const d = data && data[k];
-            console.log(d);
             const string = getTemplateString(key,t, d);
             return insertData(key, string, d);
         });
