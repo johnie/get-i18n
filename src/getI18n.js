@@ -74,13 +74,11 @@ const getTemplate = (translations, key) => {
 export function getI18n(key, data) {
     const template = getTemplate(i18n, key);
     if (isNamespace(template)) {
-        console.log('yes', key)
         const ret = map(template, (t, k) => {
             const d = data && data[k];
             const string = getTemplateString(key, t, d);
             return insertData(key, string, d);
         });
-        console.log(ret);
         return ret;
     } else {
         const templateString = getTemplateString(key, template, data);

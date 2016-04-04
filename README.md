@@ -85,7 +85,7 @@ import {getI18n} from 'get-i18n';
 getI18n('products', {heading:{name:'Jan'}});
 // {
 //   heading: 'Other products from Jan.',
-     subheading: 'Lorem ipsum'
+//   subheading: 'Lorem ipsum'
 // }
 ```
 
@@ -101,7 +101,9 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
-* 1.0.0 Initial release
-* 1.1.0 Namespaces
-* 1.1.1 Fixed missing build
+* 1.1.3 Pluralization plus namespace bug 
 * 1.1.2 Removed console.log
+* 1.1.1 Fixed missing build
+* 1.1.0 Namespaces
+* 1.0.0 Initial release
+
