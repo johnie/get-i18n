@@ -86,6 +86,15 @@ describe('Get namespace with...', function () {
         const translations = getI18n('products', {header: {name: 'Jan'}});
         assert.equal(translations.header, 'Other products from Jan.');
     });
+    it(`no enough data`, function () {
+        const translations = getI18n('products');
+        assert.equal(typeof translations, 'object');
+    });
+
+    it(`no enough data and pluralization`, function () {
+        const translations = getI18n('categories');
+        assert.equal(translations.subheading, 'Not enough data supplied');
+    });
 });
 
 

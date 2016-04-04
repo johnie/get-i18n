@@ -49,7 +49,7 @@ var isNamespace = function isNamespace(obj) {
 
 var getTemplateString = function getTemplateString(key, template, data) {
     if (typeof template === 'object') {
-        if (data.count !== undefined) {
+        if (data && data.count !== undefined) {
             if (template[data.count]) {
                 return template[data.count];
             } else if (template.other) {
@@ -92,11 +92,14 @@ var getTemplate = function getTemplate(translations, key) {
 function getI18n(key, data) {
     var template = getTemplate(i18n, key);
     if (isNamespace(template)) {
-        return (0, _objectMap2['default'])(template, function (t, k) {
+        console.log('yes', key);
+        var ret = (0, _objectMap2['default'])(template, function (t, k) {
             var d = data && data[k];
             var string = getTemplateString(key, t, d);
             return insertData(key, string, d);
         });
+        console.log(ret);
+        return ret;
     } else {
         var templateString = getTemplateString(key, template, data);
         return insertData(key, templateString, data);

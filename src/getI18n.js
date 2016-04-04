@@ -11,7 +11,7 @@ templateSettings.interpolate = /\{\{(.+?)\}\}/g;
 let i18n = null;
 
 const isPluralizationKey = (obj) => {
-    if(obj.other){
+    if (obj.other) {
         return true;
     } else {
         return false;
@@ -19,9 +19,9 @@ const isPluralizationKey = (obj) => {
 }
 
 const isNamespace = (obj) => {
-    if(typeof obj === 'function' || typeof obj === 'string'){
+    if (typeof obj === 'function' || typeof obj === 'string') {
         return false;
-    } else if(isPluralizationKey(obj)){
+    } else if (isPluralizationKey(obj)) {
         return false
     } else {
         return true;
@@ -30,7 +30,7 @@ const isNamespace = (obj) => {
 
 const getTemplateString = (key, template, data) => {
     if (typeof template === 'object') {
-        if (data.count !== undefined) {
+        if (data && data.count !== undefined) {
             if (template[data.count]) {
                 return template[data.count]
             } else if (template.other) {
@@ -73,12 +73,15 @@ const getTemplate = (translations, key) => {
 
 export function getI18n(key, data) {
     const template = getTemplate(i18n, key);
-    if(isNamespace(template)){
-        return map(template, (t,k) => {
+    if (isNamespace(template)) {
+        console.log('yes', key)
+        const ret = map(template, (t, k) => {
             const d = data && data[k];
-            const string = getTemplateString(key,t, d);
+            const string = getTemplateString(key, t, d);
             return insertData(key, string, d);
         });
+        console.log(ret);
+        return ret;
     } else {
         const templateString = getTemplateString(key, template, data);
         return insertData(key, templateString, data);
