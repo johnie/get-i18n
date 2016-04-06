@@ -92,13 +92,11 @@ var getTemplate = function getTemplate(translations, key) {
 function getI18n(key, data) {
     var template = getTemplate(i18n, key);
     if (isNamespace(template)) {
-        console.log('yes', key);
         var ret = (0, _objectMap2['default'])(template, function (t, k) {
             var d = data && data[k];
             var string = getTemplateString(key, t, d);
             return insertData(key, string, d);
         });
-        console.log(ret);
         return ret;
     } else {
         var templateString = getTemplateString(key, template, data);

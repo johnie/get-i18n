@@ -1,8 +1,24 @@
 "use strict";
-import objectPath from 'object-path';
 import template from 'lodash.template';
-import map from 'object.map';
 import templateSettings from 'lodash.templatesettings';
+
+var objectPath = function(obj, path){
+    for (var i=0, path=path.split('.'), len=path.length; i<len; i++){
+        if(obj[path[i]]){
+        obj = obj[path[i]];
+        } else {
+            return undefined;
+        }
+    };
+    return obj;
+};
+
+function map(obj, mapFunc) {
+    return Object.keys(obj).reduce(function (newObj, value) {
+        newObj[value] = mapFunc(obj[value], value);
+        return newObj;
+    }, {});
+}
 
 // Set lodash template settings to mustache syntax
 templateSettings.interpolate = /\{\{(.+?)\}\}/g;
@@ -62,7 +78,7 @@ const insertData = (key, compiled, data) => {
 };
 
 const getTemplate = (translations, key) => {
-    const template = objectPath.get(translations, key);
+    const template = objectPath(translations, key);
     if (template === undefined) {
         return `Missing translation key ${key}`;
     } else {
