@@ -96,7 +96,7 @@ getI18n('products', {heading:{name:'Jan'}});
 ```js
 import {getI18n} from 'get-i18n';
 const status = true;
-getI18n(`developerMode.${status}'); // Developer mode is on.
+getI18n(`developerMode.${status}`); // Developer mode is on.
 ```
 
 
