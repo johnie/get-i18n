@@ -28,6 +28,10 @@ setI18n({
     calendar: {
         heading: 'Calendar',
         description: 'Lorem ipsum...'
+    },
+    developerMode:{
+        true: 'Developer mode is on.',
+        false: 'Developer mode is off.'
     }
 });
 
@@ -75,6 +79,13 @@ describe('Get translation string...', function () {
         const translation = getI18n('notifications', {count: 7});
         assert.equal(translation, '7')
     });
+
+    it(`get translation with boolean`, function () {
+        const status = true;
+        const translation = getI18n(`developerMode.${status}`);
+        assert.equal(translation, 'Developer mode is on.')
+    });
+
 });
 
 describe('Get namespace with...', function () {
