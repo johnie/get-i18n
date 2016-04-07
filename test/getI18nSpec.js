@@ -86,6 +86,12 @@ describe('Get translation string...', function () {
         assert.equal(translation, 'Developer mode is on.')
     });
 
+    it(`get translation with boolean`, function () {
+        const status = false;
+        const translation = getI18n('developerMode');
+        assert.equal(translation[status], 'Developer mode is off.')
+    });
+
 });
 
 describe('Get namespace with...', function () {

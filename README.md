@@ -44,7 +44,10 @@ setI18n({
             other: 'You have {{count}} new messages.'
         }
     },
-    
+    developerMode:{
+        true: 'Developer mode is on.',
+        false: 'Developer mode is off.'
+    }
 });
 ```
 
@@ -87,6 +90,13 @@ getI18n('products', {heading:{name:'Jan'}});
 //   heading: 'Other products from Jan.',
 //   subheading: 'Lorem ipsum'
 // }
+```
+
+##### Get key based on dynamic data
+```js
+import {getI18n} from 'get-i18n';
+const status = true;
+getI18n(`developerMode.${status}'); // Developer mode is on.
 ```
 
 
